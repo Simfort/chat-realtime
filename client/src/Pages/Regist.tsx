@@ -1,3 +1,7 @@
+import FormRegist from "../components/FormRegist/FormRegist";
+
 export default function Regist() {
-    return <main></main>
+    return <main>
+        <FormRegist />
+    </main>
 }

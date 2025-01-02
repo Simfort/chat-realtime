@@ -5,8 +5,7 @@ const HeaderChat = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    font-family: "Nunito", serif;
-    font-weight: 600;
+   
 
 `
 const HeaderNav = styled.nav`
@@ -30,8 +29,8 @@ export default function Header() {
         <h1>Hello.io</h1>
         <HeaderNav>
             <HeaderLink to='/'>Home</HeaderLink>
-            <HeaderLink to='/regist'>Register</HeaderLink>
-            <HeaderLink to='/personalRoom'>You</HeaderLink>
+            {!localStorage.getItem('user') && <HeaderLink to='/regist'>Register</HeaderLink>}
+            {localStorage.getItem('user') && <HeaderLink style={{ color: 'blue' }} to={`/personalRoom?${localStorage.getItem('user')}`}>{localStorage.getItem('user')}</HeaderLink>}
         </HeaderNav>
     </HeaderChat>
 }
