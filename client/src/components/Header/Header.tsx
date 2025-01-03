@@ -30,7 +30,7 @@ export default function Header() {
         <HeaderNav>
             <HeaderLink to='/'>Home</HeaderLink>
             {!localStorage.getItem('user') && <HeaderLink to='/regist'>Register</HeaderLink>}
-            {localStorage.getItem('user') && <HeaderLink style={{ color: 'blue' }} to={`/personalRoom?${localStorage.getItem('user')}`}>{localStorage.getItem('user')}</HeaderLink>}
+            {localStorage.getItem('user') && <HeaderLink style={{ color: 'blue' }} to={`/personalRoom?name=${localStorage.getItem('user')}`}>{localStorage.getItem('user')}</HeaderLink>}
         </HeaderNav>
     </HeaderChat>
 }

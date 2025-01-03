@@ -69,7 +69,8 @@ export default function FormRegist() {
                     setErr('This name or password')
                 } else if (data == 'yes') {
                     localStorage.setItem('user', `${value.username}`)
-                    navigate(`/personalRoom?${value.username}`)
+                    navigate(`/personalRoom?user=${value.username}`)
+                    window.location.reload()
                 }
             }).catch(e => console.log(e))
 

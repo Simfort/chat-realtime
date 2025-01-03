@@ -1,3 +1,8 @@
+import Person from "../components/PersonaRoom/Person";
+
+
 export default function PersonalRoom() {
-    return <main></main>
+    return <main>
+        <Person></Person>
+    </main>
 }
