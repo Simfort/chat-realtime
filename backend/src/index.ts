@@ -6,6 +6,7 @@ import messageRouter from "./routes/message.route";
 import cors from "cors";
 import { app, server } from "./lib/socket";
 import path from "path";
+import * as fs from "fs";
 
 dotenv.config();
 
@@ -25,7 +26,20 @@ app.use("/api/messages", messageRouter);
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
+  fs.writeFile(
+    path.join(__dirname, "./lib/db.json"),
+    JSON.stringify({
+      users: [],
+    }),
+    (err) => console.error(err)
+  );
+  fs.writeFile(
+    path.join(__dirname, "./lib/messages.json"),
+    JSON.stringify({
+      messages: [],
+    }),
+    (err) => console.error(err)
+  );
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
