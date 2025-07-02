@@ -112,6 +112,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "types": ["node"],
-    "allowJs": true
+    "allowJs": true,
+    "resolveJsonModule": true
   }
 }
