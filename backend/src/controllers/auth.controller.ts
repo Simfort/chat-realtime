@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import User, { IUser } from "../models/user.model";
+import User, { IUser } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { generateToken } from "../lib/utils";
+import { generateToken } from "../lib/utils.js";
 
 export const signup = async (req: Request, res: Response) => {
   const { fullName, email, password }: IUser = req.body;

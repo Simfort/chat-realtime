@@ -1,10 +1,10 @@
 import express from "express";
-import authRouter from "./routes/auth.route";
+import authRouter from "./routes/auth.route.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import messageRouter from "./routes/message.route";
+import messageRouter from "./routes/message.route.js";
 import cors from "cors";
-import { app, server } from "./lib/socket";
+import { app, server } from "./lib/socket.js";
 import path from "path";
 import * as fs from "fs";
 
@@ -26,23 +26,29 @@ app.use("/api/messages", messageRouter);
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  fs.writeFile(
-    path.join(__dirname, "./lib/db.json"),
-    JSON.stringify({
-      users: [],
-    }),
-    (err) => console.error(err)
+  const hasDB = fs.readFileSync(path.join(__dirname, "./lib/db.json"));
+  const hasMESSAGES = fs.readFileSync(
+    path.join(__dirname, "./lib/messages.json")
   );
-  fs.writeFile(
-    path.join(__dirname, "./lib/messages.json"),
-    JSON.stringify({
-      messages: [],
-    }),
-    (err) => console.error(err)
-  );
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-  });
+  if (!hasDB && !hasMESSAGES) {
+    app.get("*", (req, res) => {
+      fs.writeFile(
+        path.join(__dirname, "./lib/db.json"),
+        JSON.stringify({
+          users: [],
+        }),
+        (err) => console.error(err)
+      );
+      fs.writeFile(
+        path.join(__dirname, "./lib/messages.json"),
+        JSON.stringify({
+          messages: [],
+        }),
+        (err) => console.error(err)
+      );
+      res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    });
+  }
 }
 server.listen(port, () => {
   console.log("server is running http://localhost:5001/api/auth");
