@@ -12,22 +12,22 @@ interface IUserUn extends Partial<IUser> {}
 export default class User {
   static addUser(data: IUser) {
     const users: { users: IUser[] } = JSON.parse(
-      fs.readFileSync("src/lib/db.json", "utf-8")
+      fs.readFileSync("dist/lib/db.json", "utf-8")
     );
 
     users.users.push(data);
-    fs.writeFileSync("src/lib/db.json", JSON.stringify(users));
+    fs.writeFileSync("dist/lib/db.json", JSON.stringify(users));
     return data;
   }
   static findAll(fn: (val: IUser, index: number) => void) {
     const users: { users: IUser[] } = JSON.parse(
-      fs.readFileSync("src/lib/db.json", "utf-8")
+      fs.readFileSync("dist/lib/db.json", "utf-8")
     );
     return users.users.filter(fn);
   }
   static findUser(data: IUserUn) {
     const users: { users: IUser[] } = JSON.parse(
-      fs.readFileSync("src/lib/db.json", "utf-8")
+      fs.readFileSync("dist/lib/db.json", "utf-8")
     );
     if (!data.email && !data.fullName && !data.password && !data.id) {
       return false;
@@ -45,7 +45,7 @@ export default class User {
   }
   static updateUser(id: number, data: IUserUn) {
     const users: { users: IUser[] } = JSON.parse(
-      fs.readFileSync("src/lib/db.json", "utf-8")
+      fs.readFileSync("dist/lib/db.json", "utf-8")
     );
     const findedUser = users.users.findIndex((val) =>
       (id ? val.id == id : true) &&
@@ -66,12 +66,12 @@ export default class User {
       ...users.users.slice(findedUser + 1, users.users.length),
     ];
     users.users.push(user);
-    fs.writeFileSync("src/lib/db.json", JSON.stringify(users));
+    fs.writeFileSync("dist/lib/db.json", JSON.stringify(users));
     return user;
   }
   static removeUser(data: IUser) {
     const users: { users: IUser[] } = JSON.parse(
-      fs.readFileSync("src/lib/db.json", "utf-8")
+      fs.readFileSync("dist/lib/db.json", "utf-8")
     );
     const findedUser = users.users.findIndex((val) =>
       val.password == data.password && val.fullName == data.fullName
@@ -79,7 +79,7 @@ export default class User {
         : false
     );
     users.users.slice(findedUser, 1);
-    fs.writeFileSync("src/lib/db.json", JSON.stringify(users));
+    fs.writeFileSync("dist/lib/db.json", JSON.stringify(users));
     return true;
   }
 }
